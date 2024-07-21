@@ -39,9 +39,9 @@ class AuthController
         // Ensure the CSRF token is valid
         $csrfToken = $request->input('_token');
         if (!Security::checkCsrfToken($csrfToken)) {
-            return redirect('/auth/index?error=Invalid csrf token');
+            return redirect('/auth/index?error=Invalid CSRF token');
         }
-        
+
         // Get credentials from request
         $username = $request->input('username');
         $password = $request->input('password');
@@ -52,9 +52,10 @@ class AuthController
 
         if ($user && password_verify($password, $user->password)) {
             // Set session and user information
-            session('user', $username); // Store username or user information as needed
+            session('user_auth', $user); // Store user object in session
+
             // Redirect to the dashboard or any other page
-            return redirect('/dashboard');
+            return redirect('/dashboard/index');
         } else {
             // Redirect to login page with error message
             return redirect('/auth/index?error=Invalid username or password');

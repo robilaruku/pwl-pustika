@@ -47,13 +47,25 @@ if (!function_exists('auth')) {
      */
     function auth(...$user)
     {
-        if (count($user) == 1) {
+        // If a user object is passed, store it in the session
+        if (count($user) === 1) {
             session('user_auth', $user[0]);
         }
-        $model = 'App\\Models\\' . app()->getConfig()['user_model'];
-        return session('user_auth') ?? new $model;
+
+        // Retrieve the user model from the session or create a new instance
+        $modelClass = 'App\\Models\\User'; // Make sure this path is correct
+
+        if (class_exists($modelClass)) {
+            return session('user_auth') ?? new $modelClass;
+        }
+
+        // Throw an exception if the model class does not exist
+        throw new \Exception('User model configuration is missing or invalid.');
     }
 }
+
+
+
 
 if (!function_exists('app')) {
     function app()
@@ -69,7 +81,7 @@ if (!function_exists('redirect')) {
      * @param string $url The URL to redirect to
      * @return void
      */
-    function redirect($url) : void
+    function redirect($url): void
     {
         header("Location: $url");
         exit; // Ensure that no further code is executed

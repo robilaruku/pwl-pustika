@@ -81,7 +81,8 @@ class UploadedFile
     public function moveTo($path = "", $filename = "", $prefix = "")
     {
         $path = app()->getConfig()::getPublicStoragePath() . $path . '/';
-        if (!is_dir($path)) mkdir($path, 0777, true);
+        if (!is_dir($path))
+            mkdir($path, 0777, true);
         $filename = ($filename ?: uniqid($prefix, true)) . '.' . $this->getExtension();
         $res = move_uploaded_file(
             $this->file['tmp_name'],
