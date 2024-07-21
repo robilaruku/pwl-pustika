@@ -1,0 +1,107 @@
+/* Reset some default styles */
+body,
+h1,
+form,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    /* Modern gradient background */
+}
+
+/* Container for the login form */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Modern card design */
+.login-form {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    /* Enhanced shadow for depth */
+    padding: 30px;
+    max-width: 800px;
+    /* Increased maximum width for a wider card */
+    width: 100%;
+    box-sizing: border-box;
+    /* Modern shadow effect for the card */
+    background: linear-gradient(145deg, #ffffff, #f0f1f6);
+    /* Subtle gradient background for the card */
+}
+
+.login-form h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
+.error {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-form {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .login-form h1 {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "klmpk-pwl/pustika-mvc",
+    "description": "Pustika MVC",
+    "license": "MIT",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "App",
+            "Core\\": "Core"
+        }
+    }
+}
