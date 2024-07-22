@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\Penerbit;
+use App\Models\Genre; // Assuming the model name is Genre
 use Core\Request;
 use Core\Security;
 
-class AdminPenerbitController
+class AdminGenreController
 {
-    protected $penerbitModel;
+    protected $genreModel;
 
     public function __construct()
     {
@@ -17,12 +17,12 @@ class AdminPenerbitController
             redirect('/auth/index?error=Please sign in to access this page');
         }
 
-        // Initialize Penerbit model
-        $this->penerbitModel = new Penerbit();
+        // Initialize Genre model
+        $this->genreModel = new Genre();
     }
 
     /**
-     * Display the list of penerbit.
+     * Display the list of genres.
      *
      * @param Request $request
      * @return Response
@@ -31,14 +31,14 @@ class AdminPenerbitController
     {
         $data = [
             'user' => auth(),
-            'penerbit' => $this->penerbitModel->all()
+            'genres' => $this->genreModel->all()
         ];
 
-        return view('admin/penerbit/index', $data, 'admin');
+        return view('admin/genre/index', $data, 'admin');
     }
 
     /**
-     * Show the form to create a new penerbit.
+     * Show the form to create a new genre.
      *
      * @param Request $request
      * @return Response
@@ -50,11 +50,11 @@ class AdminPenerbitController
             'csrfToken' => Security::getCsrfToken()
         ];
 
-        return view('admin/penerbit/tambah', $data, 'admin');
+        return view('admin/genre/tambah', $data, 'admin');
     }
 
     /**
-     * Handle the creation of a new penerbit.
+     * Handle the creation of a new genre.
      *
      * @param Request $request
      * @return Response
@@ -63,23 +63,22 @@ class AdminPenerbitController
     {
         $csrfToken = $request->input('_token');
         if (!Security::checkCsrfToken($csrfToken)) {
-            return redirect('/admin-penerbit/create?error=Invalid CSRF token');
+            return redirect('/admin-genre/create?error=Invalid CSRF token');
         }
 
         $data = [
-            'nama' => $request->input('nama'),
-            'alamat' => $request->input('alamat'),
+            'nama   ' => $request->input('nama'),
         ];
 
-        if ($this->penerbitModel->create($data)) {
-            return redirect('/admin-penerbit/index?success=Data created successfully');
+        if ($this->genreModel->create($data)) {
+            return redirect('/admin-genre/index?success=Data created successfully');
         } else {
-            return redirect('/admin-penerbit/create?error=Failed to create data');
+            return redirect('/admin-genre/create?error=Failed to create data');
         }
     }
 
     /**
-     * Show the form to edit an existing penerbit.
+     * Show the form to edit an existing genre.
      *
      * @param Request $request
      * @param int $id
@@ -87,23 +86,23 @@ class AdminPenerbitController
      */
     public function edit(Request $request, $id)
     {
-        $penerbit = $this->penerbitModel->find($id);
+        $genre = $this->genreModel->find($id);
 
-        if (!$penerbit) {
-            return redirect('/admin-penerbit/index?error=Data not found');
+        if (!$genre) {
+            return redirect('/admin-genre/index?error=Data not found');
         }
 
         $data = [
             'user' => auth(),
             'csrfToken' => Security::getCsrfToken(),
-            'penerbit' => $penerbit
+            'genre' => $genre
         ];
 
-        return view('admin/penerbit/edit', $data, 'admin');
+        return view('admin/genre/edit', $data, 'admin');
     }
 
     /**
-     * Handle the update of an existing penerbit.
+     * Handle the update of an existing genre.
      *
      * @param Request $request
      * @param int $id
@@ -113,23 +112,22 @@ class AdminPenerbitController
     {
         $csrfToken = $request->input('_token');
         if (!Security::checkCsrfToken($csrfToken)) {
-            return redirect("/admin-penerbit/edit/$id?error=Invalid CSRF token");
+            return redirect("/admin-genre/edit/$id?error=Invalid CSRF token");
         }
 
         $data = [
             'nama' => $request->input('nama'),
-            'alamat' => $request->input('alamat'),
         ];
 
-        if ($this->penerbitModel->update($id, $data)) {
-            return redirect('/admin-penerbit/index?success=Data updated successfully');
+        if ($this->genreModel->update($id, $data)) {
+            return redirect('/admin-genre/index?success=Data updated successfully');
         } else {
-            return redirect("/admin-penerbit/edit/$id?error=Failed to update data");
+            return redirect("/admin-genre/edit/$id?error=Failed to update data");
         }
     }
 
     /**
-     * Handle the deletion of a penerbit.
+     * Handle the deletion of a genre.
      *
      * @param Request $request
      * @param int $id
@@ -137,10 +135,10 @@ class AdminPenerbitController
      */
     public function delete(Request $request, $id)
     {
-        if ($this->penerbitModel->delete($id)) {
-            return redirect('/admin-penerbit/index?success=Data deleted successfully');
+        if ($this->genreModel->delete($id)) {
+            return redirect('/admin-genre/index?success=Data deleted successfully');
         } else {
-            return redirect('/admin-penerbit/index?error=Failed to delete data');
+            return redirect('/admin-genre/index?error=Failed to delete data');
         }
     }
 }

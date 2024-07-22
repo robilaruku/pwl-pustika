@@ -8,6 +8,12 @@ use Core\Security;
 
 class AuthController
 {
+    protected $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new User();
+    }
 
     public function index(Request $request)
     {
@@ -15,11 +21,6 @@ class AuthController
         $csrfToken = Security::getCsrfToken();
 
         return view('login', ['name' => 'Pustika', 'csrfToken' => $csrfToken], 'auth');
-    }
-
-    public function api(Request $request)
-    {
-        return json(['name' => $request->query('name')]);
     }
 
     public function page404(Request $request)
@@ -47,8 +48,7 @@ class AuthController
         $password = $request->input('password');
 
         // Instantiate User model and check credentials
-        $userModel = new User();
-        $user = $userModel->first('username', $username);
+        $user = $this->userModel->first('username', $username);
 
         if ($user && password_verify($password, $user->password)) {
             // Set session and user information

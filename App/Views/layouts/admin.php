@@ -18,7 +18,7 @@
                 <ul>
                     <li><a href="/dashboard/index">Dashboard</a></li>
                     <li><a href="/admin-penerbit/index">Penerbit</a></li>
-                    <li><a href="#reports">Genre</a></li>
+                    <li><a href="/admin-genre/index">Genre</a></li>
                     <li><a href="/admin-buku/index">List Buku</a></li>
                     <li><a href="#reports">About us</a></li>
                     <li><a href="#reports">Our Location</a></li>
