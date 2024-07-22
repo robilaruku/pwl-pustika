@@ -4,15 +4,14 @@ Admin Page
 
 <?php \Core\View::startSection('header'); ?>
 <header class="header">
-    <h1>Welcome, Admin</h1>
+    <h1>Welcome, <?= auth()->username ?></h1>
     <div class="header-right">
-        <a href="#profile" class="header-link">Profile</a>
-        <a href="#logout" class="header-link">Logout</a>
+        <a href="/auth/logout" onclick="return confirm('Apakah anda ingin logout?')" class="header-link">Logout</a>
     </div>
 </header>
 <?php \Core\View::endSection(); ?>
 
 <?php \Core\View::startSection('content'); ?>
 <h2>Dashboard</h2>
-<p>Here you can manage your application.</p>
+<p>Welcome back <?= auth()->username ?></p>
 <?php \Core\View::endSection(); ?>

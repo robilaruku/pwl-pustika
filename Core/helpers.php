@@ -39,33 +39,21 @@ if (!function_exists('session')) {
 }
 
 if (!function_exists('auth')) {
-    /**
-     * Get or Set user object in session
-     *
-     * @param \App\Models\User ...$user
-     * @return \App\Models\User
-     */
     function auth(...$user)
     {
-        // If a user object is passed, store it in the session
         if (count($user) === 1) {
             session('user_auth', $user[0]);
         }
 
-        // Retrieve the user model from the session or create a new instance
         $modelClass = 'App\\Models\\User'; // Make sure this path is correct
 
         if (class_exists($modelClass)) {
             return session('user_auth') ?? new $modelClass;
         }
 
-        // Throw an exception if the model class does not exist
         throw new \Exception('User model configuration is missing or invalid.');
     }
 }
-
-
-
 
 if (!function_exists('app')) {
     function app()
@@ -75,15 +63,20 @@ if (!function_exists('app')) {
 }
 
 if (!function_exists('redirect')) {
-    /**
-     * Redirect to a given URL
-     *
-     * @param string $url The URL to redirect to
-     * @return void
-     */
     function redirect($url): void
     {
         header("Location: $url");
-        exit; // Ensure that no further code is executed
+        exit;
+    }
+}
+
+if (!function_exists('logout')) {
+    function logout($redirectTo = '/auth/index')
+    {
+        session_on_demand();
+        session('user_auth', null);
+        session_unset();
+        session_destroy();
+        redirect($redirectTo);
     }
 }

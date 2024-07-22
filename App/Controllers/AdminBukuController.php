@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Core\Request;
 use Core\Security;
 
-class DashboardController
+class AdminBukuController
 {
     /**
      * DashboardController constructor.
@@ -26,6 +26,6 @@ class DashboardController
      */
     public function index(Request $request)
     {
-        return view('admin/dashboard', ['user' => auth()], 'admin');
+        return view('admin/buku/index', ['user' => auth()], 'admin');
     }
 }

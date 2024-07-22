@@ -62,4 +62,22 @@ class AuthController
         }
     }
 
+     /**
+     * Handle user logout
+     *
+     * @return Response
+     */
+    public function logout()
+    {
+        // Start session if not already started
+        session_on_demand();
+
+        // Clear session data
+        session_unset();
+        session_destroy();
+
+        // Redirect to login page or home page
+        return redirect('/auth/index');
+    }
+
 }

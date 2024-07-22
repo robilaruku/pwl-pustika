@@ -10,6 +10,10 @@ Login Page
 <div class="login-container">
     <div class="login-form">
         <h1>Sign In</h1>
+        <?php if (isset($error)): ?>
+        <p class="error"><?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
+        <br>
         <form action="/auth/login" method="POST">
             <input type="hidden" name="_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
             <div class="input-group">
@@ -21,9 +25,6 @@ Login Page
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Login</button>
-            <?php if (isset($error)): ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
-            <?php endif; ?>
         </form>
     </div>
 </div>

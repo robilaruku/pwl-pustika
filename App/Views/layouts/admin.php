@@ -12,14 +12,17 @@
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>Admin Panel</h2>
+                <h2>Pustika CMS</h2>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#dashboard">Dashboard</a></li>
-                    <li><a href="#users">Users</a></li>
-                    <li><a href="#settings">Settings</a></li>
-                    <li><a href="#reports">Reports</a></li>
+                    <li><a href="/dashboard/index">Dashboard</a></li>
+                    <li><a href="/admin-penerbit/index">Penerbit</a></li>
+                    <li><a href="#reports">Genre</a></li>
+                    <li><a href="/admin-buku/index">List Buku</a></li>
+                    <li><a href="#reports">About us</a></li>
+                    <li><a href="#reports">Our Location</a></li>
+                    <li><a href="#reports">Agenda</a></li>
                 </ul>
             </nav>
         </aside>
