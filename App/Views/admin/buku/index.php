@@ -16,36 +16,52 @@ Admin Page
 <div class="card">
     <div class="card-header">
         Semua Data Buku
+        <a href="/admin-buku/create" class="btn btn-sm btn-primary create-btn">Tambah Data</a>
     </div>
     <div class="card-body">
+        <?php if (isset($error) && $error): ?>
+        <div class="message error">
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p><?php echo htmlspecialchars($error); ?></p>
+        </div>
+        <?php endif; ?>
+        <?php if (isset($success) && $success): ?>
+        <div class="message success">
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p><?php echo htmlspecialchars($success); ?></p>
+        </div>
+        <?php endif; ?>
+        <br>
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Title</th>
-                    <th>Author</th>
                     <th>Year</th>
+                    <th>Publisher</th>
+                    <th>Genre</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($books as $index => $book): ?>
                 <tr>
-                    <td>1</td>
-                    <td>Book Title 1</td>
-                    <td>Author 1</td>
-                    <td>2024</td>
+                    <td><?php echo htmlspecialchars($index + 1); ?></td>
+                    <td><?php echo htmlspecialchars($book['judul']); ?></td>
+                    <td><?php echo htmlspecialchars($book['tahun_terbit']); ?></td>
+                    <td><?php echo htmlspecialchars($book['penerbit_nama']); ?></td>
+                    <td><?php echo htmlspecialchars($book['genre_nama']); ?></td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="/admin-buku/edit/<?php echo htmlspecialchars($book['id']); ?>"
+                                class="btn btn-sm btn-primary">Edit</a>
+                            <a href="/admin-buku/delete/<?php echo htmlspecialchars($book['id']); ?>"
+                                class="btn btn-sm btn-primary"
+                                onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Delete</a>
+                        </div>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Book Title 2</td>
-                    <td>Author 2</td>
-                    <td>2023</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Book Title 3</td>
-                    <td>Author 3</td>
-                    <td>2022</td>
-                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

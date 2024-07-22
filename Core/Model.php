@@ -7,10 +7,17 @@ class Model
     /** @var string Table Name */
     protected $table = null;
 
-
     /** @var string Primary Key Column */
     protected $key = "id";
 
+    /** @var string SQL query string */
+    protected $query = '';
+
+    /** @var array Query parameters */
+    protected $params = [];
+
+    /** @var array Selected columns */
+    protected $selectColumns = ['*'];
 
     public function __construct()
     {
@@ -23,13 +30,12 @@ class Model
         }
     }
 
-
     /**
      * Get row from db table with id
      *
      * @param int $id Id value
-     * @param array $columns Columns to be retirved
-     * @param int $fetchStyle PDO fetch style constatnt
+     * @param array $columns Columns to be retrieved
+     * @param int $fetchStyle PDO fetch style constant
      * @return mixed
      */
     public function find($id, $columns = ['*'], $fetchStyle = \PDO::FETCH_BOTH)
@@ -66,25 +72,21 @@ class Model
     public function first($column = null, $value = null)
     {
         if ($column && $value) {
-            // If column and value are provided, use the where method
             $stmt = Database::getConnection()->prepare("SELECT * FROM {$this->table} WHERE `$column` = ? LIMIT 1");
             $stmt->execute([$value]);
         } else {
-            // If no column and value are provided, get the first record
             $stmt = Database::getConnection()->prepare("SELECT * FROM {$this->table} LIMIT 1");
             $stmt->execute();
         }
 
-        // Fetch and return the first record
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 
-
     /**
-     * Get all row from db table
+     * Get all rows from db table
      *
-     * @param array $columns Columns to be retirved
-     * @param int $fetchStyle PDO fetch style constatnt
+     * @param array $columns Columns to be retrieved
+     * @param int $fetchStyle PDO fetch style constant
      * @return array
      */
     public function all($columns = ['*'], $fetchStyle = \PDO::FETCH_BOTH)
@@ -95,7 +97,6 @@ class Model
         $stmt->execute();
         return $stmt->fetchAll($fetchStyle);
     }
-
 
     /**
      * Update db row with $id with given values
@@ -112,9 +113,8 @@ class Model
             ->execute(array_merge(array_values($data), [$id]));
     }
 
-
     /**
-     * Delete row from fb table witn given id
+     * Delete row from db table with given id
      *
      * @param int $id
      * @return boolean
@@ -139,5 +139,73 @@ class Model
         return Database::getConnection()
             ->prepare("INSERT INTO $this->table ($columns) VALUES ($values)")
             ->execute(array_values($data));
+    }
+
+    /**
+     * Join another table
+     *
+     * @param string $table Table to join
+     * @param string $first First column to join
+     * @param string $operator Operator for join
+     * @param string $second Second column to join
+     * @return $this
+     */
+    public function join($table, $first, $operator, $second)
+    {
+        $this->query .= " JOIN $table ON $first $operator $second";
+        return $this;
+    }
+
+    /**
+     * Add a WHERE clause to the query
+     *
+     * @param string $column Column name
+     * @param mixed $value Value to filter by
+     * @return $this
+     */
+    public function whereClause($column, $value)
+    {
+        $this->query .= " WHERE `$column` = ?";
+        $this->params[] = $value;
+        return $this;
+    }
+
+    /**
+     * Specify the columns to be retrieved
+     *
+     * @param array $columns
+     * @return $this
+     */
+    public function select($columns = ['*'])
+    {
+        $this->selectColumns = $columns;
+        return $this;
+    }
+
+    /**
+     * Get data with the current query
+     *
+     * @param int $fetchStyle PDO fetch style constant
+     * @return array
+     */
+    public function get($fetchStyle = \PDO::FETCH_BOTH)
+    {
+        $columns = implode(",", $this->selectColumns);
+        $stmt = Database::getConnection()->prepare("SELECT $columns FROM $this->table" . $this->query);
+        $stmt->execute($this->params);
+        $this->resetQuery(); // Reset query and params after execution
+        return $stmt->fetchAll($fetchStyle);
+    }
+
+    /**
+     * Reset query and parameters
+     *
+     * @return void
+     */
+    protected function resetQuery()
+    {
+        $this->query = '';
+        $this->params = [];
+        $this->selectColumns = ['*'];
     }
 }
