@@ -5,7 +5,10 @@ namespace Core;
 /**
  * Class is responsible for creating responses easily
  */
-class ResponseFactory {
+class ResponseFactory
+{
+
+    public $config = \Core\Config::class;
 
     /**
      * Render view with sections and layout
@@ -15,7 +18,7 @@ class ResponseFactory {
      * @param array $data
      * @return Response
      */
-    public static function view($config = \Core\Config::class ?? null, $templates, $data = []): Response
+    public static function view($config, $templates, $data = []): Response
     {
         // Start capturing the output
         ob_start();

@@ -115,7 +115,7 @@ class Config extends BaseConfig
         "dbname" => "tugas_klmpk_pwl",
         "username" => "root",
         "password" => "",
-        "port" => 3307
+        "port" => 3306
     ];
 
 

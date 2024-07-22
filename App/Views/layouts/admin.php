@@ -23,6 +23,7 @@
                     <li><a href="#reports">About us</a></li>
                     <li><a href="#reports">Our Location</a></li>
                     <li><a href="#reports">Agenda</a></li>
+                    <li><a href="#reports">User</a></li>
                 </ul>
             </nav>
         </aside>
@@ -32,9 +33,7 @@
             </header>
 
             <div class="content">
-                <main>
-                    <?php echo \Core\View::yieldSection('content'); ?>
-                </main>
+                <?php echo \Core\View::yieldSection('content'); ?>
             </div>
         </main>
     </div>
