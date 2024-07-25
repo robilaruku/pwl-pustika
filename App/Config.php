@@ -74,9 +74,8 @@ class Config extends BaseConfig
      */
     public static function getPublicStoragePath()
     {
-        return dirname(__DIR__) . '/storage/public/';
+        return dirname(__DIR__) . 'public/storage/';
     }
-
 
     /**
      * Which superglobals to while making app instance

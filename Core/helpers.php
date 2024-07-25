@@ -48,7 +48,7 @@ if (!function_exists('auth')) {
         $modelClass = 'App\\Models\\User'; // Make sure this path is correct
 
         if (class_exists($modelClass)) {
-            return session('user_auth') ?? new $modelClass;
+            return session('user_auth') ?? new $modelClass();
         }
 
         throw new \Exception('User model configuration is missing or invalid.');
@@ -66,7 +66,7 @@ if (!function_exists('redirect')) {
     function redirect($url): void
     {
         header("Location: $url");
-        exit;
+        exit();
     }
 }
 
@@ -80,3 +80,11 @@ if (!function_exists('logout')) {
         redirect($redirectTo);
     }
 }
+
+if (!function_exists('public_path')) {
+    function public_path($path = '')
+    {
+        return rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . ltrim($path, '/');
+    }
+}
+
