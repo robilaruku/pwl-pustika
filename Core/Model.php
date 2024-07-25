@@ -78,7 +78,7 @@ class Model
             $stmt = Database::getConnection()->prepare("SELECT * FROM {$this->table} LIMIT 1");
             $stmt->execute();
         }
-
+        
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 

@@ -149,4 +149,138 @@ class AdminBukuController
             );
         }
     }
+
+    /**
+     * Show the form to edit an existing book.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function edit(Request $request, $id)
+    {
+        $book = $this->bukuModel->find($id);
+
+        if (!$book) {
+            return redirect('/admin-buku/index?error=Data not found');
+        }
+
+        $penerbits = $this->penerbitModel->all();
+        $genres = $this->genreModel->all();
+
+        $data = [
+            'user' => auth(),
+            'csrfToken' => Security::getCsrfToken(),
+            'book' => $book,
+            'penerbits' => $penerbits,
+            'genres' => $genres,
+        ];
+
+        return view('admin/buku/edit', $data, 'admin');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $csrfToken = $request->input('_token');
+        if (!Security::checkCsrfToken($csrfToken)) {
+            return redirect("/admin-buku/edit/$id?error=Invalid CSRF token");
+        }
+
+        // Get form inputs
+        $judul = $request->input('judul');
+        $penerbit_id = $request->input('penerbit_id');
+        $genre_id = $request->input('genre_id');
+        $tahun_terbit = $request->input('tahun_terbit');
+        $content = $request->input('content');
+        $gambar = null;
+
+        // Fetch the existing book data
+        $existingBook = $this->bukuModel->find($id);
+
+        // Handle file upload
+        if (
+            isset($_FILES['gambar']) &&
+            $_FILES['gambar']['error'] === UPLOAD_ERR_OK
+        ) {
+            try {
+                // Remove the existing image if any
+                if (!empty($existingBook['gambar'])) {
+                    $existingImagePath = public_path(
+                        'storage/uploaded_files/' . $existingBook['gambar']
+                    );
+                    if (file_exists($existingImagePath)) {
+                        unlink($existingImagePath); // Delete the existing file
+                    }
+                }
+
+                // Create an instance of UploadedFile
+                $uploadedFile = new \Core\UploadedFile($_FILES['gambar']);
+
+                // Move the file to the storage directory
+                $gambar = $uploadedFile->moveTo('uploaded_files', '', 'book_');
+            } catch (\Exception $e) {
+                $error = 'File upload failed: ' . $e->getMessage();
+                return redirect(
+                    "/admin-buku/edit/$id?error=" . urlencode($error)
+                );
+            }
+        } else {
+            // If no new file is uploaded, keep the existing image
+            $gambar = $existingBook['gambar'];
+        }
+
+        // Prepare data for database update
+        $data = [
+            'judul' => $judul,
+            'penerbit_id' => intval($penerbit_id),
+            'genre_id' => intval($genre_id),
+            'tahun_terbit' => intval($tahun_terbit),
+            'content' => $content,
+            'gambar' => $gambar,
+        ];
+
+        // Save data to the database
+        if ($this->bukuModel->update($id, $data)) {
+            return redirect(
+                '/admin-buku/index?success=Data updated successfully'
+            );
+        } else {
+            return redirect("/admin-buku/edit/$id?error=Failed to update data");
+        }
+    }
+
+    /**
+     * Handle the deletion of a book and its associated file.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function delete(Request $request, $id)
+    {
+        // Fetch the book details to get the file path
+        $book = $this->bukuModel->find($id);
+
+        if (!$book) {
+            return redirect('/admin-buku/index?error=Data not found');
+        }
+
+        // Delete the file if it exists
+        if (!empty($book['gambar'])) {
+            $filePath = 'storage/uploaded_files/' . $book['gambar'];
+
+            if (file_exists($filePath)) {
+                unlink($filePath); // Delete the file
+            }
+        }
+
+        // Attempt to delete the book record
+        if ($this->bukuModel->delete($id)) {
+            return redirect(
+                '/admin-buku/index?success=Data deleted successfully'
+            );
+        } else {
+            return redirect('/admin-buku/index?error=Failed to delete data');
+        }
+    }
 }

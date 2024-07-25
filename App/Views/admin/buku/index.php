@@ -1,3 +1,8 @@
+<?php
+// Get error and success messages from query parameters
+$error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+$success = isset($_GET['success']) ? htmlspecialchars($_GET['success']) : '';
+?>
 <?php \Core\View::startSection('title'); ?>
 Admin Page
 <?php \Core\View::endSection(); ?>
@@ -49,21 +54,34 @@ Admin Page
                     <tr>
                         <td><?php echo htmlspecialchars($index + 1); ?></td>
                         <td><?php echo htmlspecialchars($book['judul']); ?></td>
-                        <td><?php echo htmlspecialchars($book['tahun_terbit']); ?></td>
-                        <td><?php echo htmlspecialchars($book['penerbit_nama']); ?></td>
-                        <td><?php echo htmlspecialchars($book['genre_nama']); ?></td>
+                        <td><?php echo htmlspecialchars(
+                            $book['tahun_terbit']
+                        ); ?></td>
+                        <td><?php echo htmlspecialchars(
+                            $book['penerbit_nama']
+                        ); ?></td>
+                        <td><?php echo htmlspecialchars(
+                            $book['genre_nama']
+                        ); ?></td>
                         <td>
                             <?php if (!empty($book['gambar'])): ?>
-                                <?php echo $fileDisplay->getImageTag($book['gambar'], 'Book Image'); ?>
+                                <?php echo $fileDisplay->getImageTag(
+                                    $book['gambar'],
+                                    'Book Image'
+                                ); ?>
                             <?php else: ?>
                                 No Image
                             <?php endif; ?>
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="/admin-buku/edit/<?php echo htmlspecialchars($book['id']); ?>"
+                                <a href="/admin-buku/edit/<?php echo htmlspecialchars(
+                                    $book['id']
+                                ); ?>"
                                     class="btn btn-sm btn-primary">Edit</a>
-                                <a href="/admin-buku/delete/<?php echo htmlspecialchars($book['id']); ?>"
+                                <a href="/admin-buku/delete/<?php echo htmlspecialchars(
+                                    $book['id']
+                                ); ?>"
                                     class="btn btn-sm btn-primary"
                                     onclick="return confirm('Are you sure you want to delete this data?')">Delete</a>
                             </div>
