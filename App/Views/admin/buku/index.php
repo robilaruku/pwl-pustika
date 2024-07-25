@@ -41,12 +41,12 @@ Admin Page
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>Publisher</th>
+                    <th>Judul</th>
+                    <th>Tahun</th>
+                    <th>Penerbit</th>
                     <th>Genre</th>
-                    <th>Image</th> <!-- New column for image -->
-                    <th>Actions</th>
+                    <th>Gambar</th> 
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
