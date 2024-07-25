@@ -203,20 +203,18 @@ class AdminBukuController
             $_FILES['gambar']['error'] === UPLOAD_ERR_OK
         ) {
             try {
-                // Remove the existing image if any
+
                 if (!empty($existingBook['gambar'])) {
                     $existingImagePath = public_path(
                         'storage/uploaded_files/' . $existingBook['gambar']
                     );
                     if (file_exists($existingImagePath)) {
-                        unlink($existingImagePath); // Delete the existing file
+                        unlink($existingImagePath); 
                     }
                 }
 
-                // Create an instance of UploadedFile
                 $uploadedFile = new \Core\UploadedFile($_FILES['gambar']);
 
-                // Move the file to the storage directory
                 $gambar = $uploadedFile->moveTo('uploaded_files', '', 'book_');
             } catch (\Exception $e) {
                 $error = 'File upload failed: ' . $e->getMessage();
@@ -258,23 +256,20 @@ class AdminBukuController
      */
     public function delete(Request $request, $id)
     {
-        // Fetch the book details to get the file path
         $book = $this->bukuModel->find($id);
 
         if (!$book) {
             return redirect('/admin-buku/index?error=Data not found');
         }
 
-        // Delete the file if it exists
         if (!empty($book['gambar'])) {
             $filePath = 'storage/uploaded_files/' . $book['gambar'];
 
             if (file_exists($filePath)) {
-                unlink($filePath); // Delete the file
+                unlink($filePath); 
             }
         }
 
-        // Attempt to delete the book record
         if ($this->bukuModel->delete($id)) {
             return redirect(
                 '/admin-buku/index?success=Data deleted successfully'
