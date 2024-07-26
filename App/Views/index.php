@@ -1,13 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello <?= $name ?></h1>
-</body>
-</html>
+<?php
+// Get error message from query parameters
+$error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+?>
+<?php \Core\View::startSection('title'); ?>
+Pustika Page
+<?php \Core\View::endSection(); ?>
+
+<?php \Core\View::startSection('jumbotron'); ?>
+<div class="jumbotron">
+    <h2>Welcome to the Library</h2>
+    <p>Your gateway to managing and discovering books efficiently.</p>
+</div>
+<?php \Core\View::endSection(); ?>
+
+<?php \Core\View::startSection('content'); ?>
+<div class="card">
+    <img src="book1.jpg" alt="Book 1">
+    <div class="card-body">
+        <h3>Book Title 1</h3>
+        <p>Author: Author Name</p>
+    </div>
+</div>
+<div class="card">
+    <img src="book2.jpg" alt="Book 2">
+    <div class="card-body">
+        <h3>Book Title 2</h3>
+        <p>Author: Author Name</p>
+    </div>
+</div>
+<div class="card">
+    <img src="book3.jpg" alt="Book 3">
+    <div class="card-body">
+        <h3>Book Title 3</h3>
+        <p>Author: Author Name</p>
+    </div>
+</div>
+<?php \Core\View::endSection(); ?>

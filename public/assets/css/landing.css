@@ -1,0 +1,107 @@
+/* styles.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+/* Navbar Styles */
+.navbar {
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    color: #333;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd; /* Light border for separation */
+}
+
+.navbar h1 {
+    margin: 0;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar ul li {
+    margin-left: 20px;
+}
+
+.navbar ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Jumbotron Styles */
+.jumbotron {
+    background: linear-gradient(135deg, rgba(110, 142, 251, 0.8), rgba(167, 119, 227, 0.8)); /* Gradient background */
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+    margin: 20px auto; /* Center the jumbotron */
+    border-radius: 8px; /* Rounded corners */
+    max-width: 1200px; /* Optional: limit width for better layout control */
+}
+
+/* Container Styles */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center cards horizontally */
+    padding: 20px;
+    max-width: 1200px; /* Optional: limit width for better layout control */
+    margin: 10px auto 20px auto; /* Add top margin for spacing from jumbotron and auto margin for centering */
+}
+
+.card {
+    background-color: transparent; /* No background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    background-color: #fff; /* Optional: add background to card body for better readability */
+}
+
+.card-body h3 {
+    margin-top: 0;
+}
+
+.card-body p {
+    color: #555;
+}
+
+/* Footer Styles */
+footer {
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #ddd; /* Light border for separation */
+}

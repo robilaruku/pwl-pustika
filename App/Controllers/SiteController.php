@@ -8,7 +8,7 @@ class SiteController {
 
     public function index(Request $request)
     {
-        return view('index', ['name' => 'Pustika']);
+        return view('index', ['name' => 'Pustika'], 'landing');
     }
 
     public function api(Request $request)
