@@ -67,11 +67,11 @@ Admin Page
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="/admin-agenda/edit/<?php echo htmlspecialchars(
+                                <a href="/admin-our-location/edit/<?php echo htmlspecialchars(
                                     $ourLocation['id']
                                 ); ?>"
                                     class="btn btn-sm btn-primary">Edit</a>
-                                <a href="/admin-agenda/delete/<?php echo htmlspecialchars(
+                                <a href="/admin-our-location/delete/<?php echo htmlspecialchars(
                                     $ourLocation['id']
                                 ); ?>"
                                     class="btn btn-sm btn-primary"
