@@ -32,7 +32,6 @@ class AdminBukuController
      */
     public function index(Request $request)
     {
-        // Fetch data with joins
         $books = $this->bukuModel
             ->join('penerbit', 'buku.penerbit_id', '=', 'penerbit.id')
             ->join('genre', 'buku.genre_id', '=', 'genre.id')
@@ -82,7 +81,6 @@ class AdminBukuController
      */
     public function store(Request $request)
     {
-        // CSRF Token Check
         $csrfToken = $request->input('_token');
         if (!Security::checkCsrfToken($csrfToken)) {
             return redirect(
@@ -90,7 +88,6 @@ class AdminBukuController
             );
         }
 
-        // Get form inputs
         $judul = htmlspecialchars($request->input('judul'));
         $penerbit_id = intval($request->input('penerbit_id'));
         $genre_id = intval($request->input('genre_id'));
@@ -98,16 +95,13 @@ class AdminBukuController
         $content = htmlspecialchars($request->input('content'));
         $gambar = null;
 
-        // Handle file upload
         if (
             isset($_FILES['gambar']) &&
             $_FILES['gambar']['error'] === UPLOAD_ERR_OK
         ) {
             try {
-                // Create an instance of UploadedFile
                 $uploadedFile = new \Core\UploadedFile($_FILES['gambar']);
 
-                // Move the file to the storage directory
                 $gambar = $uploadedFile->moveTo('uploaded_files', '', 'book_');
             } catch (\Exception $e) {
                 $error = 'File upload failed: ' . $e->getMessage();
@@ -127,7 +121,6 @@ class AdminBukuController
             }
         }
 
-        // Prepare data for database insertion
         $data = [
             'judul' => $judul,
             'penerbit_id' => $penerbit_id,
@@ -137,7 +130,7 @@ class AdminBukuController
             'gambar' => $gambar,
         ];
 
-        // Save data to the database
+
         if ($this->bukuModel->create($data)) {
             return redirect(
                 '/admin-buku/index?success=' .
@@ -179,6 +172,13 @@ class AdminBukuController
         return view('admin/buku/edit', $data, 'admin');
     }
 
+    /**
+     * Update the form to edit an existing book.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
     public function update(Request $request, $id)
     {
         $csrfToken = $request->input('_token');
@@ -186,7 +186,6 @@ class AdminBukuController
             return redirect("/admin-buku/edit/$id?error=Invalid CSRF token");
         }
 
-        // Get form inputs
         $judul = $request->input('judul');
         $penerbit_id = $request->input('penerbit_id');
         $genre_id = $request->input('genre_id');
@@ -194,10 +193,8 @@ class AdminBukuController
         $content = $request->input('content');
         $gambar = null;
 
-        // Fetch the existing book data
         $existingBook = $this->bukuModel->find($id);
 
-        // Handle file upload
         if (
             isset($_FILES['gambar']) &&
             $_FILES['gambar']['error'] === UPLOAD_ERR_OK
@@ -215,6 +212,7 @@ class AdminBukuController
 
                 $uploadedFile = new \Core\UploadedFile($_FILES['gambar']);
 
+
                 $gambar = $uploadedFile->moveTo('uploaded_files', '', 'book_');
             } catch (\Exception $e) {
                 $error = 'File upload failed: ' . $e->getMessage();
@@ -223,11 +221,9 @@ class AdminBukuController
                 );
             }
         } else {
-            // If no new file is uploaded, keep the existing image
             $gambar = $existingBook['gambar'];
         }
 
-        // Prepare data for database update
         $data = [
             'judul' => $judul,
             'penerbit_id' => intval($penerbit_id),
@@ -237,7 +233,6 @@ class AdminBukuController
             'gambar' => $gambar,
         ];
 
-        // Save data to the database
         if ($this->bukuModel->update($id, $data)) {
             return redirect(
                 '/admin-buku/index?success=Data updated successfully'

@@ -20,8 +20,8 @@
                     <li><a href="/admin-penerbit/index">Penerbit</a></li>
                     <li><a href="/admin-genre/index">Genre</a></li>
                     <li><a href="/admin-buku/index">List Buku</a></li>
-                    <li><a href="#reports">Our Location</a></li>
-                    <li><a href="#reports">Agenda</a></li>
+                    <li><a href="/admin-our-location/index">Our Location</a></li>
+                    <li><a href="/admin-agenda/index">Agenda</a></li>
                 </ul>
             </nav>
         </aside>
