@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use Core\Request;
-use Core\Security;
 
 class DashboardController
 {

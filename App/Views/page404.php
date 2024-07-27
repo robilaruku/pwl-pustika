@@ -7,6 +7,6 @@
     <title>404</title>
 </head>
 <body>
-    <h1>Oh no seems like the page you're looking for is not here.</h1>
+    <h1>Halaman Ga Ketemu</h1>
 </body>
 </html>

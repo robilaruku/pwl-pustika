@@ -13,11 +13,10 @@
         <nav class="navbar">
             <h1>Pustika</h1>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Books</a></li>
-                <li><a href="#">Members</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="/">Beranda</a></li>
+                <li><a href="/location">Location</a></li>
+                <li><a href="/agenda">Agenda</a></li>
+                <li><a href="/auth/index">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -29,7 +28,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Library Management System</p>
+        <p>&copy; 2024 Pustika CMS</p>
     </footer>
 </body>
 

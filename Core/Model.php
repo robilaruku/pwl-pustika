@@ -19,6 +19,9 @@ class Model
     /** @var array Selected columns */
     protected $selectColumns = ['*'];
 
+    /** @var array Joined tables */
+    protected $joins = [];
+
     public function __construct()
     {
         if (is_null($this->table)) {
@@ -78,7 +81,7 @@ class Model
             $stmt = Database::getConnection()->prepare("SELECT * FROM {$this->table} LIMIT 1");
             $stmt->execute();
         }
-        
+
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 
@@ -93,8 +96,8 @@ class Model
     {
         $columns = implode(",", $columns);
         $stmt = Database::getConnection()
-            ->prepare("SELECT $columns FROM $this->table");
-        $stmt->execute();
+            ->prepare("SELECT $columns FROM $this->table" . $this->query);
+        $stmt->execute($this->params);
         return $stmt->fetchAll($fetchStyle);
     }
 
@@ -152,7 +155,7 @@ class Model
      */
     public function join($table, $first, $operator, $second)
     {
-        $this->query .= " JOIN $table ON $first $operator $second";
+        $this->joins[] = "JOIN $table ON $first $operator $second";
         return $this;
     }
 
@@ -165,7 +168,12 @@ class Model
      */
     public function whereClause($column, $value)
     {
-        $this->query .= " WHERE `$column` = ?";
+        // Check if a WHERE clause already exists in the query
+        if (strpos($this->query, 'WHERE') === false) {
+            $this->query .= " WHERE `$column` = ?";
+        } else {
+            $this->query .= " AND `$column` = ?";
+        }
         $this->params[] = $value;
         return $this;
     }
@@ -191,7 +199,11 @@ class Model
     public function get($fetchStyle = \PDO::FETCH_BOTH)
     {
         $columns = implode(",", $this->selectColumns);
-        $stmt = Database::getConnection()->prepare("SELECT $columns FROM $this->table" . $this->query);
+        $joins = implode(' ', $this->joins); // Join all tables
+        $sql = "SELECT $columns FROM $this->table $joins" . $this->query;
+        error_log("SQL Query: " . $sql); // Log the SQL query
+        error_log("Parameters: " . json_encode($this->params)); // Log the parameters
+        $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute($this->params);
         $this->resetQuery(); // Reset query and params after execution
         return $stmt->fetchAll($fetchStyle);
@@ -207,5 +219,6 @@ class Model
         $this->query = '';
         $this->params = [];
         $this->selectColumns = ['*'];
+        $this->joins = []; // Reset joins
     }
 }

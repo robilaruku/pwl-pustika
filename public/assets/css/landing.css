@@ -1,22 +1,21 @@
 /* styles.css */
 
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-
 }
 
-/* Navbar Styles */
 .navbar {
-    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    background: rgba(255, 255, 255, 0.8);
     color: #333;
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd; /* Light border for separation */
+    border-bottom: 1px solid #ddd;
+    max-width: 1200px; 
+    margin: 0 auto; 
 }
 
 .navbar h1 {
@@ -36,39 +35,34 @@ body {
 
 .navbar ul li a {
     color: #333;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
-.navbar ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Jumbotron Styles */
 .jumbotron {
-    background: linear-gradient(135deg, rgba(110, 142, 251, 0.8), rgba(167, 119, 227, 0.8)); /* Gradient background */
+    background: linear-gradient(135deg, rgba(110, 142, 251, 0.8), rgba(167, 119, 227, 0.8));
     color: #fff;
     padding: 40px;
     text-align: center;
-    margin: 20px auto; /* Center the jumbotron */
-    border-radius: 8px; /* Rounded corners */
-    max-width: 1200px; /* Optional: limit width for better layout control */
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 1200px;
 }
 
-/* Container Styles */
 .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center cards horizontally */
+    justify-content: center;
     padding: 20px;
-    max-width: 1200px; /* Optional: limit width for better layout control */
-    margin: 10px auto 20px auto; /* Add top margin for spacing from jumbotron and auto margin for centering */
+    max-width: 1200px;
+    margin: 10px auto 20px auto;
 }
 
 .card {
-    background-color: transparent; /* No background */
+    background-color: transparent;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     margin: 10px;
     overflow: hidden;
     display: flex;
@@ -79,11 +73,13 @@ body {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    display: block;
 }
 
 .card-body {
     padding: 15px;
-    background-color: #fff; /* Optional: add background to card body for better readability */
+    background-color: #fff;
+    flex-grow: 1;
 }
 
 .card-body h3 {
@@ -94,14 +90,42 @@ body {
     color: #555;
 }
 
-/* Footer Styles */
+.card-footer {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+}
+
+.btn-detail {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    float: left;
+    text-decoration: none;
+}
+
+.btn-detail:hover {
+    background: linear-gradient(135deg, #5a6aeb, #9a66d6);
+}
+
 footer {
-    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    background: rgba(255, 255, 255, 0.8);
     color: #333;
     text-align: center;
-    padding: 10px;
     position: fixed;
     bottom: 0;
     width: 100%;
-    border-top: 1px solid #ddd; /* Light border for separation */
+    border-top: 1px solid #ddd;
+}
+
+@media (min-width: 768px) {
+    .card.col-md-12 {
+        width: 100%;
+        max-width: 1200px;
+    }
 }

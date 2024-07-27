@@ -21,7 +21,9 @@ Admin Page
 <div class="card">
     <div class="card-header">
         Semua Data Our Location
+        <?php if (!count($ourLocations) > 0) : ?>
         <a href="/admin-our-location/create" class="btn btn-sm btn-primary create-btn">Tambah Data</a>
+        <?php endif; ?>
     </div>
     <div class="card-body">
         <?php if (isset($error) && $error): ?>
