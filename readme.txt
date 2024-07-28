@@ -19,12 +19,12 @@
 2. **Impor Struktur dan Data**:
    - Jika Anda memiliki file dump SQL, impor ke database yang baru dibuat:
      ```bash
-     mysql -u username -p nama_database < path/to/your/dumpfile.sql
+     mysql -u username -p nama_database < path/to/your/tugas_klmpk_pwl_2024-07-22.sql
      ```
 
 ### 1.3. Konfigurasi Aplikasi
 1. **Atur Konfigurasi Database**:
-   - Buka file `config` dalam aplikasi Anda (misalnya `config/database.php` atau `config/config.php`).
+   - Buka file `config` dalam aplikasi Anda (misalnya `core/config.php` atau `app/config.php`).
    - Sesuaikan pengaturan database sesuai dengan informasi koneksi Anda:
      ```php
      return [
